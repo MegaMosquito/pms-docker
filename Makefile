@@ -21,7 +21,7 @@ LOCAL_IP_ADDRESS        := $(word 7, $(LOCAL_DEFAULT_ROUTE))
 KEY_FILE :=~/Desktop/Keys/home
 
 # By default, build, push, and run (claim might go stale by the end though)
-default: build push
+default: build push run
 
 # Build my own copy
 build:
@@ -36,7 +36,7 @@ run: stop
 	  -e PLEX_CLAIM=$PLEX_CLAIM \
 	  -v /home/pi/PLEX/config:/config \
 	  -v /home/pi/PLEX/transcode:/transcode \
-	  -v /media/pi/UNTITLED/share:/data \
+	  -v /media/pi/UNTITLED/PLEXDATA:/data \
 	  $(DOCKERHUB_ID)/$(NAME):$(VERSION)
 
 # Show command to create required tunnel for setup at http://localhost:32400
@@ -56,4 +56,4 @@ clean: stop
 	@docker rmi -f $(DOCKERHUB_ID)/$(NAME):$(VERSION) >/dev/null 2>&1 || :
 
 # Declare all of these non-file-system targets as .PHONY
-.PHONY: default build run push stop
+.PHONY: default build run tunnel push stop
