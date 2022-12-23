@@ -29,8 +29,7 @@ build:
 
 # Run the damned thing
 run: stop
-	docker run \
-	  -d \
+	docker run -d --restart unless-stopped \
 	  --name $(NAME) \
 	  --network=host \
 	  -e TZ="America/Los_Angeles" \
